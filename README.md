@@ -1,4 +1,4 @@
-# Enterprise-Scale RAG Ingestion Pipeline
+#  RAG Ingestion Pipeline
 
 **PySpark + FAISS + FastAPI | Designed for Industrial Air-Gapped Environments**
 
@@ -12,7 +12,7 @@ Naive RAG systems fail in enterprise environments due to:
 
 **Result**: Industrial automation teams abandon RAG or build fragile, non-scalable prototypes.
 
-## Why This Matters to Honeywell
+## Why This Matters
 
 - **Industrial automation generates millions of PDFs**: Equipment manuals, safety procedures, maintenance logs, compliance documents
 - **Systems are air-gapped**: No internet access in manufacturing facilities for security/compliance
