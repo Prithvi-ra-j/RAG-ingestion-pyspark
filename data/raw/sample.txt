@@ -1,0 +1,5 @@
+This is a sample text document for testing the ingestion pipeline.
+
+It contains multiple paragraphs with various content.
+
+The document ingestion system should be able to parse this file successfully.

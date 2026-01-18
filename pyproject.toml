@@ -1,0 +1,94 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "enterprise-rag-pyspark"
+version = "0.1.0"
+description = "Enterprise-scale RAG ingestion system with PySpark"
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "MIT"}
+authors = [
+    {name = "Your Name", email = "your.email@example.com"}
+]
+keywords = ["rag", "pyspark", "embeddings", "vector-search", "llm"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+]
+
+dependencies = [
+    "pyspark>=3.5.0",
+    "PyPDF2>=3.0.1",
+    "pdfplumber>=0.10.3",
+    "spacy>=3.7.2",
+    "sentence-transformers>=2.2.2",
+    "torch>=2.1.0",
+    "transformers>=4.35.0",
+    "faiss-cpu>=1.7.4",
+    "chromadb>=0.4.18",
+    "fastapi>=0.104.1",
+    "uvicorn[standard]>=0.24.0",
+    "pydantic>=2.5.0",
+    "langchain>=0.0.340",
+    "langchain-community>=0.0.1",
+    "openai>=1.3.5",
+    "numpy>=1.24.3",
+    "pandas>=2.0.3",
+    "pyarrow>=14.0.1",
+    "python-dotenv>=1.0.0",
+    "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.3",
+    "pytest-cov>=4.1.0",
+    "black>=23.11.0",
+    "flake8>=6.1.0",
+    "mypy>=1.7.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/enterprise/rag-pyspark"
+Documentation = "https://github.com/enterprise/rag-pyspark/docs"
+Repository = "https://github.com/enterprise/rag-pyspark"
+
+[tool.setuptools]
+packages = ["spark", "rag"]
+
+[tool.black]
+line-length = 100
+target-version = ['py39', 'py310', 'py311']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.venv
+  | \.eggs
+  | \.tox
+  | build
+  | dist
+  | data
+)/
+'''
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=spark --cov=rag --cov-report=term-missing"

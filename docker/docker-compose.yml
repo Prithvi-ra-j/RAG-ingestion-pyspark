@@ -1,0 +1,103 @@
+version: '3.8'
+
+services:
+  # Spark ingestion service
+  spark-ingestion:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.spark
+    container_name: rag-spark-ingestion
+    volumes:
+      - ../data/raw:/data/raw:ro
+      - ../data/processed:/data/processed
+    environment:
+      - SPARK_DRIVER_MEMORY=4g
+      - SPARK_EXECUTOR_MEMORY=4g
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+    command: >
+      python spark/ingest.py
+      --input /data/raw
+      --output /data/processed/docs
+
+  # Chunking service
+  spark-chunking:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.spark
+    container_name: rag-spark-chunking
+    volumes:
+      - ../data/processed:/data/processed
+    environment:
+      - SPARK_DRIVER_MEMORY=4g
+      - SPARK_EXECUTOR_MEMORY=4g
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 8G
+    command: >
+      python spark/chunk.py
+      --input /data/processed/docs
+      --output /data/processed/chunks
+      --chunk-size 512
+      --overlap 50
+      --strategy fixed
+
+  # Embedding worker service
+  embedding-worker:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.embedding
+    container_name: rag-embedding-worker
+    volumes:
+      - ../data/processed:/data/processed:ro
+      - ../data/embeddings:/data/embeddings
+    environment:
+      - EMBEDDING_MODEL=all-MiniLM-L6-v2
+      - BATCH_SIZE=16
+    deploy:
+      resources:
+        limits:
+          cpus: '8'
+          memory: 8G
+    command: >
+      python spark/embed.py
+      --input /data/processed/chunks
+      --output /data/embeddings
+      --model all-MiniLM-L6-v2
+      --batch-size 16
+      --checkpoint-interval 5000
+
+  # RAG API service
+  rag-api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.api
+    container_name: rag-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../data/embeddings:/data/embeddings:ro
+      - ../data/vector_store:/data/vector_store:ro
+    environment:
+      - VECTOR_STORE_PATH=/data/vector_store
+      - EMBEDDING_MODEL=all-MiniLM-L6-v2
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - OPENROUTER_MODEL=${OPENROUTER_MODEL:-openai/gpt-3.5-turbo}
+      - PORT=8000
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    restart: unless-stopped
+
+volumes:
+  raw-data:
+  processed-data:
+  embeddings-data:
+  vector-store-data:

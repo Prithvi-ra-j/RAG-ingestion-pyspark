@@ -1,0 +1,118 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+
+# Internal tooling
+.kiro/
+
+# Data files and directories (keep sample documents for demo)
+data/processed/
+data/embeddings/
+data/*.parquet
+data/*.npy
+data/vector_store/
+data/simple_rag/
+
+# Checkpoints
+checkpoints/
+*.checkpoint
+
+# Model files
+models/
+*.bin
+*.pt
+*.pth
+*.onnx
+*.safetensors
+
+# Vector store indexes
+*.index
+*.faiss
+*.pkl
+*.pickle
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Spark
+spark-warehouse/
+metastore_db/
+derby.log
+
+# Docker
+.dockerignore
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Large files (exclude processed vectors, keep source samples for demo)
+*.zip
+*.tar.gz

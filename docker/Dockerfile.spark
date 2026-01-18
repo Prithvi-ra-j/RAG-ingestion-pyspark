@@ -1,0 +1,28 @@
+# Dockerfile for Spark Ingestion and Chunking
+FROM python:3.10-slim
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    openjdk-21-jre-headless \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set Java home
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir pyspark==3.5.0 PyPDF2==3.0.1 pyarrow==14.0.1
+
+# Copy application code
+COPY spark/ ./spark/
+
+# Set Python path
+ENV PYTHONPATH=/app
+
+# Default command
+CMD ["python", "spark/ingest.py"]

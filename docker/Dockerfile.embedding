@@ -1,0 +1,25 @@
+# Dockerfile for Embedding Worker
+FROM python:3.10-slim
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set working directory
+WORKDIR /app
+
+# Copy CPU-specific requirements
+COPY requirements-cpu.txt .
+
+# Install Python dependencies with CPU-only packages
+RUN pip install --no-cache-dir -r requirements-cpu.txt
+
+# Copy application code
+COPY spark/ ./spark/
+
+# Set Python path
+ENV PYTHONPATH=/app
+
+# Default command
+CMD ["python", "spark/embed.py"]

@@ -1,0 +1,1 @@
+Docker containers help with application deployment and scaling.

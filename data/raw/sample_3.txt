@@ -1,0 +1,1 @@
+RAG systems combine retrieval and generation for better AI responses.

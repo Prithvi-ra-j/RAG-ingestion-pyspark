@@ -1,0 +1,31 @@
+Enterprise RAG System Documentation
+
+Introduction
+This document describes the Enterprise RAG (Retrieval-Augmented Generation) system built with PySpark and sentence transformers.
+
+Key Features
+- Document ingestion from multiple formats (PDF, TXT, DOCX)
+- Intelligent text chunking with overlap
+- Vector embeddings using sentence transformers
+- Fast similarity search with FAISS
+- RESTful API for querying
+
+Architecture
+The system consists of several components:
+1. Ingestion pipeline for processing documents
+2. Chunking service for splitting text
+3. Embedding generation using CPU-optimized models
+4. Vector store for similarity search
+5. API service for user queries
+
+Performance
+The system is optimized for 8GB RAM environments and uses CPU-only processing for maximum compatibility.
+
+Getting Started
+1. Place documents in data/raw/
+2. Run the ingestion pipeline
+3. Generate embeddings
+4. Build vector store
+5. Start the API service
+
+For more information, see the documentation.
